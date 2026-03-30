@@ -14,13 +14,7 @@ import java.util.Optional;
 public interface EventRepository {
 
 
-    @Results(id = "eventMapper", value = {
-            @Result(property = "eventId", column = "event_id"),
-            @Result(property = "eventName", column = "event_name"),
-            @Result(property = "eventDate", column = "event_date"),
-            @Result(property = "venueId", column = "venue_id", one = @One(select = "org.eventtracking.spring_boot_hw_003.repository.VenueRepository.getVenueById")),
-            @Result(property = "attendee", column = "event_id", many = @Many(select = "org.eventtracking.spring_boot_hw_003.repository.AttendeeRepository.getAttendeesByEventId"))
-    })
+    @Results(id = "eventMapper", value = {@Result(property = "eventId", column = "event_id"), @Result(property = "eventName", column = "event_name"), @Result(property = "eventDate", column = "event_date"), @Result(property = "venueId", column = "venue_id", one = @One(select = "org.eventtracking.spring_boot_hw_003.repository.VenueRepository.getVenueById")), @Result(property = "attendee", column = "event_id", many = @Many(select = "org.eventtracking.spring_boot_hw_003.repository.AttendeeRepository.getAttendeesByEventId"))})
     @Select("""
             select * from events offset #{offset} limit #{size};
             """)
@@ -56,16 +50,14 @@ public interface EventRepository {
     Optional<Boolean> verifyEvent(String eventName, LocalDate eventDate);
 
 
-
-
     @Insert("""
                 insert into event_attendee values (#{attendeeId},#{eventId});
             """)
     void createEventAttendee(Long eventId, int attendeeId);
 
     @Delete("""
-delete from event_attendee where event_id = #{eventId};
-""")
+            delete from event_attendee where event_id = #{eventId};
+            """)
     void deleteEventAttendee(int eventId);
 
 
@@ -74,7 +66,6 @@ delete from event_attendee where event_id = #{eventId};
                 update events set event_name = #{req.eventName},event_date = #{req.eventDate},venue_id = #{req.venueId} where event_id = #{id} ;
             """)
     void updateEventById(int id, @PathParam("req") EventRequest req);
-
 
 
 }

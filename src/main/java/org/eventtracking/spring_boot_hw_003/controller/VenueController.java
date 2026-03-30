@@ -1,7 +1,6 @@
 package org.eventtracking.spring_boot_hw_003.controller;
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.eventtracking.spring_boot_hw_003.model.entity.Venue;
